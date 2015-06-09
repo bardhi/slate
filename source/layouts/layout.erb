@@ -81,16 +81,10 @@ under the License.
       <div class="dark-box"></div>
       <div class="content">
         <%= yield %>
-        <% includeCount = 0 %>
         <% current_page.data.includes && current_page.data.includes.each do |include| %>
-        <% if includeCount == 0 %>
         <div class="api-section content" id="<%= include %>">
-        <% else %>
-        <div class="api-section content" id="<%= include %>">
-        <% end  %>
             <%= partial "includes/#{include}" %>
         </div>
-        <% includeCount = includeCount + 1 %>
         <% end %>
       </div>
       <div class="dark-box">

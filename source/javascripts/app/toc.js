@@ -12,6 +12,28 @@
     };
 
     var makeToc = function () {
+        
+        updateHeaderIds();
+
+        function updateHeaderIds() {
+            var headers = $( ":header" );
+            var lastH1 = null;
+            for (var i = 0; i < headers.length; i++) {
+                var h = headers[i];
+                if (h.tagName == "H1") {
+                    lastH1 = h.id;
+                } else {
+                    if (lastH1 != null) {
+                        h.id = createId(lastH1, h.id);
+                    }
+                }
+            }
+        }
+        
+        function createId(apiName, methodName) {
+            return apiName + "_" + methodName;
+        }
+        
         global.toc = $('#toc').toc({
             'selectors': 'h1,h2', //elements to use as headings
             'itemClass': function (i, heading, $heading, prefix) { // custom function for item class
@@ -23,13 +45,30 @@
                 }
                 return classes;
             },
+            'anchorName': function (i, heading, prefix) { //custom function for anchor name
+                return heading.id;
+            },
             'onHighlight': function (el) {
                 var sectionId = getSectionId(el[0]);
+                updateLocationHash(el);
                 toggleTocView(sectionId);
                 prevSelectedId = sectionId;
             }, //called when a new section is highlighted 
 
         });
+
+        function updateLocationHash(el) {
+            var liNode = el[0];
+            var aNode = liNode.childNodes[0];
+            var hash = aNode.hash.substring(1);
+            if (window.location.hash != hash) {
+                window.location.hash = "_" + hash;
+            }
+        }
+
+        function getHash(sectionId) {
+            return sectionId;
+        }
 
         $(".toc-h1").click(function () {
             var sectionId = getSectionId(this);
@@ -61,13 +100,6 @@
             findTocH2(sectionId).removeClass("hidden");
         }
 
-        //        function toggleSectionView(sectionId) {
-        //            if (prevSelectedId != null) {
-        //                $(".api-section#" + prevSelectedId).addClass("hidden");
-        //            }
-        //            $(".api-section#" + sectionId).toggleClass("hidden");
-        //        }
-
         function findTocH2(sectionId) {
             return $(".toc-h2." + TOC_GROUP_PREFIX + sectionId);
         }
@@ -79,6 +111,16 @@
         });
 
         $(".page-wrapper").click(closeToc);
+
+        scrollToAnchor();
+
+        function scrollToAnchor() {
+            var hash = window.location.hash;
+            if (hash != null && hash.indexOf("#_") == 0) {
+                var realHash = hash.substring(2);
+                window.location.hash = realHash;
+            }
+        }
     };
 
     $(makeToc);
