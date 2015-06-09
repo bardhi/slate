@@ -172,7 +172,7 @@ html, body {
   }
 
 
-  .tocify-item>a, .toc-footer li {
+  .toc-footer li {
     padding: 0 $nav-padding 0 $nav-padding;
     display: block;
     overflow-x: hidden;
@@ -600,11 +600,6 @@ html, body {
 
   #nav-button {
     display: block;
-  }
-
-  .tocify-wrapper .tocify-item > a {
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
   }
 }
 

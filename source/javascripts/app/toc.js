@@ -79,7 +79,6 @@
         });
 
         $(".page-wrapper").click(closeToc);
-        $(".tocify-item").click(closeToc);
     };
 
     $(makeToc);
