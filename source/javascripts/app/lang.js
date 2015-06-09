@@ -32,8 +32,6 @@ under the License.
     }
     $(".highlight." + language).show();
 
-    global.toc.calculateHeights();
-
     // scroll to the new location of the position
     if ($(window.location.hash).get(0)) {
       $(window.location.hash).get(0).scrollIntoView(true);

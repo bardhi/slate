@@ -25,6 +25,7 @@ under the License.
     <%= stylesheet_link_tag :screen, media: :screen %>
     <%= stylesheet_link_tag :print, media: :print %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans" />
     <% if current_page.data.search %>
       <%= javascript_include_tag  "all" %>
     <% else %>
@@ -48,7 +49,7 @@ under the License.
       </span>
     </a>
     <div class="tocify-wrapper">
-      <%= image_tag "logo.png" %>
+      <%= image_tag "incapture.png" %>
       <% if language_tabs %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
@@ -80,8 +81,16 @@ under the License.
       <div class="dark-box"></div>
       <div class="content">
         <%= yield %>
+        <% includeCount = 0 %>
         <% current_page.data.includes && current_page.data.includes.each do |include| %>
-          <%= partial "includes/#{include}" %>
+        <% if includeCount == 0 %>
+        <div class="api-section content" id="<%= include %>">
+        <% else %>
+        <div class="api-section content" id="<%= include %>">
+        <% end  %>
+            <%= partial "includes/#{include}" %>
+        </div>
+        <% includeCount = includeCount + 1 %>
         <% end %>
       </div>
       <div class="dark-box">
