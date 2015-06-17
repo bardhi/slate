@@ -12,28 +12,6 @@
     };
 
     var makeToc = function () {
-        
-        updateHeaderIds();
-
-        function updateHeaderIds() {
-            var headers = $( ":header" );
-            var lastH1 = null;
-            for (var i = 0; i < headers.length; i++) {
-                var h = headers[i];
-                if (h.tagName == "H1") {
-                    lastH1 = h.id;
-                } else {
-                    if (lastH1 != null) {
-                        h.id = createId(lastH1, h.id);
-                    }
-                }
-            }
-        }
-        
-        function createId(apiName, methodName) {
-            return apiName + "_" + methodName;
-        }
-        
         global.toc = $('#toc').toc({
             'selectors': 'h1,h2', //elements to use as headings
             'itemClass': function (i, heading, $heading, prefix) { // custom function for item class
@@ -56,6 +34,8 @@
             }, //called when a new section is highlighted 
 
         });
+        
+        $("#toc-loading").addClass("hidden");
 
         function updateLocationHash(el) {
             var liNode = el[0];
@@ -111,16 +91,6 @@
         });
 
         $(".page-wrapper").click(closeToc);
-
-        scrollToAnchor();
-
-        function scrollToAnchor() {
-            var hash = window.location.hash;
-            if (hash != null && hash.indexOf("#_") == 0) {
-                var realHash = hash.substring(2);
-                window.location.hash = realHash;
-            }
-        }
     };
 
     $(makeToc);

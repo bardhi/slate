@@ -67,6 +67,7 @@ under the License.
         </div>
         <ul class="search-results"></ul>
       <% end %>
+      <div id="toc-loading"><span>Loading contents...</span></div>
       <div id="toc">
       </div>
       <% if current_page.data.toc_footers %>
@@ -82,7 +83,7 @@ under the License.
       <div class="content">
         <%= yield %>
         <% current_page.data.includes && current_page.data.includes.each do |include| %>
-        <div class="api-section content" id="<%= include %>">
+        <div class="api-section content" id="<%= include %>-content">
             <%= partial "includes/#{include}" %>
         </div>
         <% end %>
